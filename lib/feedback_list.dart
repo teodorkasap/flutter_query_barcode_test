@@ -8,7 +8,7 @@ import 'model/form.dart';
 class FeedbackListScreen extends StatelessWidget {
   final FeedbackForm feedbackForm;
 
-  FeedbackListScreen({Key key, @required this.feedbackForm}) : super(key: key);
+  FeedbackListScreen({this.feedbackForm});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class FeedbackListScreen extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FeedbackListPage(title: "Responses"));
+        home: FeedbackListPage(title: "Responses",feedbackForm: feedbackForm,));
   }
 }
 
 class FeedbackListPage extends StatefulWidget {
-  FeedbackListPage({Key key, this.title}) : super(key: key);
-
+  FeedbackListPage({Key key, this.title,this.feedbackForm}) : super(key: key);
+  final FeedbackForm feedbackForm;
   final String title;
 
   @override

@@ -156,9 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FeedbackListScreen(feedbackForm);
+                      builder: (context) => FeedbackListScreen(feedbackForm:feedbackForm,)
                     ),
-                    ));
+                    );
               },
               child: Text('View Feedback'),
             ),
