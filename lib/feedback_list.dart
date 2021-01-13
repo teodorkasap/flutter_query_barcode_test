@@ -17,7 +17,7 @@ class FeedbackListScreen extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FeedbackListPage(title: "Responses",feedbackForm: feedbackForm,));
+        home: FeedbackListPage(title: "Responses",feedbackForm: feedbackForm));
   }
 }
 
@@ -27,10 +27,13 @@ class FeedbackListPage extends StatefulWidget {
   final String title;
 
   @override
-  _FeedbackListPageState createState() => _FeedbackListPageState();
+  _FeedbackListPageState createState() => _FeedbackListPageState(feedbackForm: feedbackForm);
 }
 
 class _FeedbackListPageState extends State<FeedbackListPage> {
+  final FeedbackForm feedbackForm;
+  _FeedbackListPageState({this.feedbackForm});
+
   List<FeedbackForm> feedbackItems = List<FeedbackForm>();
 
   // Method to Submit Feedback and save it in Google Sheets
@@ -39,7 +42,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   void initState() {
     super.initState();
 
-    FormController().getFeedbackList().then((feedbackItems) {
+    FormController().getFeedbackList(feedbackForm.barcodeNo).then((feedbackItems) {
       setState(() {
         this.feedbackItems = feedbackItems;
       });
