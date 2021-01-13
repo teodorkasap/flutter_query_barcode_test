@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // String variable to hold barcode data
   String _scanBarcode = 'Unknown';
+  FeedbackForm feedbackForm;
 
   @override
   void initState() {
@@ -87,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
+      feedbackForm = FeedbackForm(_scanBarcode);
     });
   }
 
@@ -154,7 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FeedbackListScreen(),
+                      builder: (context) => FeedbackListScreen(feedbackForm);
+                    ),
                     ));
               },
               child: Text('View Feedback'),

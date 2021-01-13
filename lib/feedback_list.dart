@@ -1,9 +1,15 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 import 'controller/form_controller.dart';
 import 'model/form.dart';
 
 class FeedbackListScreen extends StatelessWidget {
+  final FeedbackForm feedbackForm;
+
+  FeedbackListScreen({Key key, @required this.feedbackForm}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
