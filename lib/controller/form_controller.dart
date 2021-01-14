@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../model/form.dart';
 
@@ -7,7 +8,7 @@ import '../model/form.dart';
 class FormController {
   // Google App Script Web URL.
   static const String URL =
-      "https://script.google.com/macros/s/AKfycbwm1DsF80Hn1bMPbwu5WL6n1h4dhEH04IYEOr-xDqHLVblHQ6s-/exec";
+      "https://script.google.com/macros/s/AKfycbxeMUiLBCi4zr8nnmCrnaf4WkAO7yq0qZm2yaQiPPubbeOe4PXDA_V5JQ/exec";
 
   // Success Status Message
   static const STATUS_SUCCESS = "SUCCESS";
@@ -42,13 +43,23 @@ class FormController {
   }
 
   Future<List<FeedbackForm>> getJsonData(String barcode) async {
-    String query = URL + "barcode=" + barcode;
+    var queryParameters = {'barcode': barcode};
+    var uri = Uri.https(
+        "script.google.com",
+        "/macros/s/AKfycbxeMUiLBCi4zr8nnmCrnaf4WkAO7yq0qZm2yaQiPPubbeOe4PXDA_V5JQ/exec",
+        queryParameters);
     var response = await http.get(
         // encode url
-        Uri.encodeFull(query),
-        headers: {"Accept": "application/json"});
+        uri,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+        });
+    print("response headers below:");
+    print(response.headers);
     print("response body below:");
     print(response.body);
+    print("the whole response below:");
+    print(response);
     var convertedResponseToJson = convert.jsonDecode(response.body);
     return convertedResponseToJson
         .map((json) => FeedbackForm.fromJson(json))
