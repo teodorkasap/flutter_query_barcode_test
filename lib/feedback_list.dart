@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 import 'controller/form_controller.dart';
@@ -42,7 +40,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   void initState() {
     super.initState();
 
-    FormController().getFeedbackList(feedbackForm.barcodeNo).then((feedbackItems) {
+    FormController().getJsonData(feedbackForm.barcodeNo).then((feedbackItems) {
       setState(() {
         this.feedbackItems = feedbackItems;
       });

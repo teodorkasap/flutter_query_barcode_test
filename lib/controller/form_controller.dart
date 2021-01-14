@@ -5,9 +5,9 @@ import '../model/form.dart';
 /// FormController is a class which does work of saving FeedbackForm in Google Sheets using
 /// HTTP GET request on Google App Script Web URL and parses response and sends result callback.
 class FormController {
-
   // Google App Script Web URL.
-  static const String URL = "https://script.google.com/macros/s/AKfycbwm1DsF80Hn1bMPbwu5WL6n1h4dhEH04IYEOr-xDqHLVblHQ6s-/exec";
+  static const String URL =
+      "https://script.google.com/macros/s/AKfycbwm1DsF80Hn1bMPbwu5WL6n1h4dhEH04IYEOr-xDqHLVblHQ6s-/exec";
 
   // Success Status Message
   static const STATUS_SUCCESS = "SUCCESS";
@@ -32,15 +32,26 @@ class FormController {
     }
   }
 
-
   /// Async function which loads feedback from endpoint URL and returns List.
   Future<List<FeedbackForm>> getFeedbackList(String barcode) async {
-    String queryParam = "barcode="+barcode;
-    return await http.get(URL+queryParam).then((response) {
+    String queryParam = "barcode=" + barcode;
+    return await http.get(URL + queryParam).then((response) {
       var jsonFeedback = convert.jsonDecode(response.body) as List;
       return jsonFeedback.map((json) => FeedbackForm.fromJson(json)).toList();
     });
   }
 
-
+  Future<List<FeedbackForm>> getJsonData(String barcode) async {
+    String query = URL + "barcode=" + barcode;
+    var response = await http.get(
+        // encode url
+        Uri.encodeFull(query),
+        headers: {"Accept": "application/json"});
+    print("response body below:");
+    print(response.body);
+    var convertedResponseToJson = convert.jsonDecode(response.body);
+    return convertedResponseToJson
+        .map((json) => FeedbackForm.fromJson(json))
+        .toList();
+  }
 }
