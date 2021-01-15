@@ -5,17 +5,24 @@ class FeedbackForm {
   String barcodeNo;
   String feedback;
 
-  FeedbackForm(this.barcodeNo);
+  FeedbackForm(
+      this.name,
+      this.email,
+      this.barcodeNo,
+      this.feedback);
+
+  // FeedbackForm(this.barcodeNo);
 
   factory FeedbackForm.fromJson(dynamic json) {
-    return FeedbackForm("${json['barcodeNo']}");
+    return FeedbackForm("${json['name']}", "${json['email']}",
+        "${json['barcodeNo']}", "${json['feedback']}");
   }
 
   // Method to make GET parameters.
   Map toJson() => {
-    'name': name,
-    'email': email,
-    'barcodeNo': barcodeNo,
-    'feedback': feedback
-  };
+        'name': name,
+        'email': email,
+        'barcodeNo': barcodeNo,
+        'feedback': feedback
+      };
 }

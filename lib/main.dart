@@ -88,35 +88,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
-      feedbackForm = FeedbackForm(_scanBarcode);
+      // feedbackForm = FeedbackForm(_scanBarcode);
     });
   }
 
   // Method to Submit Feedback and save it in Google Sheets
-  void _submitForm() {
-    // Validate returns true if the form is valid, or false
-    // otherwise.
-    if (_formKey.currentState.validate()) {
-      // If the form is valid, proceed.
-      FeedbackForm feedbackForm = FeedbackForm(_scanBarcode);
-
-      FormController formController = FormController();
-
-      _showSnackbar("Submitting Feedback");
-
-      // Submit 'feedbackForm' and save it in Google Sheets.
-      formController.submitForm(feedbackForm, (String response) {
-        print("Response: $response");
-        if (response == FormController.STATUS_SUCCESS) {
-          // Feedback is saved succesfully in Google Sheets.
-          _showSnackbar("Feedback Submitted");
-        } else {
-          // Error Occurred while saving data in Google Sheets.
-          _showSnackbar("Error Occurred!");
-        }
-      });
-    }
-  }
+  // void _submitForm() {
+  //   // Validate returns true if the form is valid, or false
+  //   // otherwise.
+  //   if (_formKey.currentState.validate()) {
+  //     // If the form is valid, proceed.
+  //     // FeedbackForm feedbackForm = FeedbackForm(_scanBarcode);
+  //
+  //     FormController formController = FormController();
+  //
+  //     _showSnackbar("Submitting Feedback");
+  //
+  //     // Submit 'feedbackForm' and save it in Google Sheets.
+  //     formController.submitForm(feedbackForm, (String response) {
+  //       print("Response: $response");
+  //       if (response == FormController.STATUS_SUCCESS) {
+  //         // Feedback is saved succesfully in Google Sheets.
+  //         _showSnackbar("Feedback Submitted");
+  //       } else {
+  //         // Error Occurred while saving data in Google Sheets.
+  //         _showSnackbar("Error Occurred!");
+  //       }
+  //     });
+  //   }
+  // }
 
   // Method to show snackbar with 'message'.
   _showSnackbar(String message) {
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     );
               },
-              child: Text('View Feedback'),
+              child: Text('Search Barcode'),
             ),
           ],
         ),
