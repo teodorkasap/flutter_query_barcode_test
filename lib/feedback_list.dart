@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'feedback_detail.dart';
 
 import 'controller/form_controller.dart';
 import 'model/form.dart';
@@ -15,21 +16,23 @@ class FeedbackListScreen extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FeedbackListPage(title: "Responses",feedbackForm: feedbackForm));
+        home: FeedbackListPage(title: "Responses", feedbackForm: feedbackForm));
   }
 }
 
 class FeedbackListPage extends StatefulWidget {
-  FeedbackListPage({Key key, this.title,this.feedbackForm}) : super(key: key);
+  FeedbackListPage({Key key, this.title, this.feedbackForm}) : super(key: key);
   final FeedbackForm feedbackForm;
   final String title;
 
   @override
-  _FeedbackListPageState createState() => _FeedbackListPageState(feedbackForm: feedbackForm);
+  _FeedbackListPageState createState() =>
+      _FeedbackListPageState(feedbackForm: feedbackForm);
 }
 
 class _FeedbackListPageState extends State<FeedbackListPage> {
   final FeedbackForm feedbackForm;
+
   _FeedbackListPageState({this.feedbackForm});
 
   List<FeedbackForm> feedbackItems = List<FeedbackForm>();
@@ -62,7 +65,8 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                 Icon(Icons.person),
                 Expanded(
                   child: Text(
-                      "${feedbackItems[index].name} (${feedbackItems[index].email})"),
+                      "${feedbackItems[index].name} (${feedbackItems[index]
+                          .email})"),
                 )
               ],
             ),
@@ -74,6 +78,10 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                 )
               ],
             ),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                  FeedbackDetailView(feedbackItems[index])));
+            },
           );
         },
       ),
