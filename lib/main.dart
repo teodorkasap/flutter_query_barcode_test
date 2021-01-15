@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
-      feedbackForm = FeedbackForm(_scanBarcode);
+      feedbackForm = FeedbackForm.onlyFromBarcode(_scanBarcode);
     });
   }
 
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // otherwise.
     if (_formKey.currentState.validate()) {
       // If the form is valid, proceed.
-      FeedbackForm feedbackForm = FeedbackForm(_scanBarcode);
+      FeedbackForm feedbackForm = FeedbackForm.onlyFromBarcode(_scanBarcode);
 
       FormController formController = FormController();
 

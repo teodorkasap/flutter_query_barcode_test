@@ -5,10 +5,16 @@ class FeedbackForm {
   String barcodeNo;
   String feedback;
 
-  FeedbackForm(this.barcodeNo);
+  FeedbackForm(
+      this.name,
+      this.email,
+      this.barcodeNo,
+      this.feedback
+  );
+  FeedbackForm.onlyFromBarcode(String barcodeNo) : this("","",barcodeNo,"");
 
   factory FeedbackForm.fromJson(dynamic json) {
-    return FeedbackForm("${json['barcodeNo']}");
+    return FeedbackForm("${json['name']}","${json['email']}","${json['barcodeNo']}","${json['feedback']}");
   }
 
   // Method to make GET parameters.

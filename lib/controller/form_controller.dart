@@ -35,8 +35,14 @@ class FormController {
 
   /// Async function which loads feedback from endpoint URL and returns List.
   Future<List<FeedbackForm>> getFeedbackList(String barcode) async {
-    String queryParam = "barcode=" + barcode;
-    return await http.get(URL + queryParam).then((response) {
+    var queryParameters = {'barcode': barcode};
+    var uri = Uri.https(
+        "script.google.com",
+        "/macros/s/AKfycbxeMUiLBCi4zr8nnmCrnaf4WkAO7yq0qZm2yaQiPPubbeOe4PXDA_V5JQ/exec",
+        queryParameters);
+    return await http.get(uri, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+    }).then((response) {
       var jsonFeedback = convert.jsonDecode(response.body) as List;
       return jsonFeedback.map((json) => FeedbackForm.fromJson(json)).toList();
     });
@@ -60,7 +66,7 @@ class FormController {
     print(response.body);
     print("the whole response below:");
     print(response);
-    var convertedResponseToJson = convert.jsonDecode(response.body);
+    var convertedResponseToJson = convert.jsonDecode(response.body) as List;
     return convertedResponseToJson
         .map((json) => FeedbackForm.fromJson(json))
         .toList();
