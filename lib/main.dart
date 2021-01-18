@@ -6,6 +6,8 @@ import 'feedback_list.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -144,12 +146,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Start barcode scan")),
             RaisedButton(
                 onPressed: () => scanQR(), child: Text("Start QR scan")),
-            // RaisedButton(
-            //   color: Colors.blue,
-            //   textColor: Colors.white,
-            //   onPressed: _submitForm,
-            //   child: Text('Submit Feedback'),
-            // ),
+            RaisedButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              onPressed: () => DefaultCacheManager().emptyCache(),
+              child: Text('Empty Cache'),
+            ),
             RaisedButton(
               color: Colors.lightBlueAccent,
               textColor: Colors.black,
@@ -161,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     );
               },
-              child: Text('View Feedback'),
+              child: Text('Find Record'),
             ),
           ],
         ),
