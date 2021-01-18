@@ -1,7 +1,10 @@
 import 'dart:convert' as convert;
 import 'dart:io';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import '../model/form.dart';
+import '../cache/feedback_cache.dart';
 
 /// FormController is a class which does work of saving FeedbackForm in Google Sheets using
 /// HTTP GET request on Google App Script Web URL and parses response and sends result callback.
@@ -67,6 +70,29 @@ class FormController {
     print("the whole response below:");
     print(response);
     var convertedResponseToJson = convert.jsonDecode(response.body) as List;
+    return convertedResponseToJson
+        .map((json) => FeedbackForm.fromJson(json))
+        .toList();
+  }
+
+  //Todo: to be tested
+  Future<List<FeedbackForm>> getJsonDataCache(String barcode) async {
+    var headers = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+    var url = URL + "?" + barcode;
+
+    var file = await DefaultCacheManager().getSingleFile(url, headers: headers);
+    if (file != null && await file.exists()) {
+      var res = await file.readAsString();
+      var convertedResponseToJson = Response(res, 200).body as List;
+      print(convertedResponseToJson);
+      return convertedResponseToJson
+          .map((json) => FeedbackForm.fromJson(json))
+          .toList();
+    }
+    var convertedResponseToJson = Response(null, 404).body as List;
+    print(convertedResponseToJson);
     return convertedResponseToJson
         .map((json) => FeedbackForm.fromJson(json))
         .toList();
