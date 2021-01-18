@@ -75,23 +75,25 @@ class FormController {
         .toList();
   }
 
-  //Todo: to be tested
+
   Future<List<FeedbackForm>> getJsonDataCache(String barcode) async {
     var headers = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
-    var url = URL + "?" + barcode;
+    var url = URL + "?barcode=" + barcode;
+    print(url);
 
     var file = await DefaultCacheManager().getSingleFile(url, headers: headers);
     if (file != null && await file.exists()) {
       var res = await file.readAsString();
-      var convertedResponseToJson = Response(res, 200).body as List;
+      var convertedResponseToJson = convert.jsonDecode(Response(res, 200).body) as List;
+
       print(convertedResponseToJson);
       return convertedResponseToJson
           .map((json) => FeedbackForm.fromJson(json))
           .toList();
     }
-    var convertedResponseToJson = Response(null, 404).body as List;
+    var convertedResponseToJson = convert.jsonDecode(Response(null, 404).body) as List;
     print(convertedResponseToJson);
     return convertedResponseToJson
         .map((json) => FeedbackForm.fromJson(json))

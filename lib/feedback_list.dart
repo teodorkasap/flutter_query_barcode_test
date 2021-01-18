@@ -45,7 +45,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   void initState() {
     super.initState();
 
-    FormController().getJsonData(feedbackForm.barcodeNo).then((feedbackItems) {
+    FormController().getJsonDataCache(feedbackForm.barcodeNo).then((feedbackItems) {
       setState(() {
         this.feedbackItems = feedbackItems;
       });
