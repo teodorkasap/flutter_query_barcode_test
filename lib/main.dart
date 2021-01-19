@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -45,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // String variable to hold barcode data
   String _scanBarcode = 'Unknown';
   FeedbackForm feedbackForm;
+  bool _enabled = false;
 
   @override
   void initState() {
@@ -92,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _scanBarcode = barcodeScanRes;
       feedbackForm = FeedbackForm.onlyFromBarcode(_scanBarcode);
+      _enabled = true;
     });
   }
 
@@ -129,6 +130,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var _onPressed;
+    if (_enabled) {
+      _onPressed = () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  FeedbackListScreen(feedbackForm: feedbackForm)),
+        );
+      };
+    }
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
@@ -155,14 +167,15 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               color: Colors.lightBlueAccent,
               textColor: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FeedbackListScreen(feedbackForm:feedbackForm)
-                    ),
-                    );
-              },
+              onPressed:_onPressed,
+              //     () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             FeedbackListScreen(feedbackForm: feedbackForm)),
+              //   );
+              // },
               child: Text('Find Record'),
             ),
           ],

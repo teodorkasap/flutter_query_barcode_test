@@ -41,19 +41,35 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
 
   List<FeedbackForm> feedbackItems = List<FeedbackForm>();
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   // Method to Submit Feedback and save it in Google Sheets
+
+  // Method to show snackbar with 'message'.
+  _showSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 
   @override
   void initState() {
     super.initState();
 
-    FormController()
-        .getJsonDataCache(feedbackForm.barcodeNo)
-        .then((feedbackItems) {
-      setState(() {
-        this.feedbackItems = feedbackItems;
+    if (feedbackForm.barcodeNo != null){
+      FormController()
+          .getJsonDataCache(feedbackForm.barcodeNo)
+          .then((feedbackItems) {
+        setState(() {
+          this.feedbackItems = feedbackItems;
+        });
       });
-    });
+    } else{
+      _showSnackbar("Barcode not found, please scan again!");
+
+    }
+
+
+
   }
 
   _goBack(BuildContext context) {
